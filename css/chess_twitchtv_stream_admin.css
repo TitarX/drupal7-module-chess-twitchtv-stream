@@ -1,0 +1,76 @@
+.error_field {
+  border: 2px solid #f00;
+}
+
+.page-admin-config-media .views-throbbing,
+.page-admin-config-media .ajax-progress-throbber {
+  display: none !important;
+}
+
+/* Блок "Список потоков" >>> */
+#stream-streams-list-wrapper {
+  border: 1px solid #ccc;
+  padding: 15px;
+}
+
+table#stream-streams-list {
+  border-spacing: 2px !important;
+}
+
+table#stream-streams-list,
+table#stream-streams-list th {
+  border: 1px solid #444 !important;
+}
+
+table#stream-streams-list th.sorted-column {
+  background-color: #fffacd;
+}
+
+table#stream-streams-list tr {
+  border-top: 1px solid #fff !important;
+  border-right: 1px solid #444 !important;
+  border-bottom: 1px solid #fff !important;
+  border-left: 1px solid #444 !important;
+}
+
+table#stream-streams-list td {
+  color: #fff;
+}
+
+table#stream-streams-list td input.form-submit {
+  margin: 0 !important;
+}
+
+table caption {
+  text-align: left;
+}
+
+table caption div:not(#stream-streams-add-message):not(#stream-streams-remove-message) {
+  display: inline-block;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+/* <<< Блок "Список потоков" */
+
+/* Модальное окно "Добавление потока вещания" >>> */
+#modalContent .ctools-modal-content {
+  max-width: 480px;
+  max-height: 430px;
+}
+
+#modalContent .ctools-modal-content .modal-header {
+  height: 23px;
+}
+
+#modalContent .ctools-modal-content .modal-header .close img {
+  top: 3px;
+  margin-left: 3px;
+}
+
+.form-item > label {
+  float: none !important;
+  font-weight: bold !important;
+  font-size: 14px !important;
+}
+/* <<< Модальное окно "Добавление потока вещания" */

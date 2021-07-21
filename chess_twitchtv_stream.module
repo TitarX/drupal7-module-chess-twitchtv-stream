@@ -1,0 +1,67 @@
+<?php
+
+/**
+ * @file
+ * Chess twitchtv stream
+ */
+
+module_load_include(
+  'inc',
+  'chess_twitchtv_stream',
+  'includes/chess_twitchtv_stream_access_by_role'
+);
+
+/**
+ * Implements hook_menu().
+ */
+function chess_twitchtv_stream_menu() {
+  $items['admin/config/media/chess-twitchtv-stream'] = [
+    'title' => 'Chess twitchtv stream',
+    'description' => 'Настройки модуля Chess twitchtv stream',
+    'page callback' => 'chess_twitchtv_stream_admin_page_contents',
+    'access callback' => 'chess_twitchtv_stream_access_by_role',
+    'access arguments' => [['administrator']],
+    'file path' => drupal_get_path('module', 'chess_twitchtv_stream'),
+    'file' => 'includes/chess_twitchtv_stream_admin_page_contents.inc',
+    'menu_name' => 'management',
+    'type' => MENU_NORMAL_ITEM,
+    'weight' => 0,
+  ];
+
+  $items['media/streams'] = [
+    'title' => 'Онлайн трансляции',
+    'description' => 'Прямые онлайн видеотрансляции на шахматные темы',
+    'page callback' => 'chess_twitchtv_stream_streams_page_contents',
+    'access callback' => TRUE,
+    'file path' => drupal_get_path('module', 'chess_twitchtv_stream'),
+    'file' => 'includes/chess_twitchtv_stream_streams_page_contents.inc',
+    'menu_name' => 'menu-horizontal-menu',
+    'type' => MENU_CALLBACK,
+    'weight' => 0,
+  ];
+
+  $items['media/streams/stream/get/ajax/%'] = [
+    'title' => 'Онлайн трансляция',
+    'description' => 'Прямые онлайн видеотрансляция на шахматную тему',
+    'file path' => drupal_get_path('module', 'chess_twitchtv_stream'),
+    'file' => 'includes/chess_twitchtv_stream_streams_page_contents.inc',
+    'page callback' => 'chess_twitchtv_stream_ajax_get_ajax',
+    'page arguments' => [5],
+    'access arguments' => ['access content'],
+    'delivery callback' => 'chess_twitchtv_stream_ajax_callback',
+    'type' => MENU_CALLBACK,
+  ];
+
+  $items['media/streams/check'] = [
+    'title' => 'Проверка состояния потока',
+    'description' => 'Проверка состояния доступности потока',
+    'page callback' => 'chess_twitchtv_stream_availability_stream_checking',
+    'access callback' => TRUE,
+    'file path' => drupal_get_path('module', 'chess_twitchtv_stream'),
+    'file' => 'includes/chess_twitchtv_stream_availability_stream_checking.inc',
+    'type' => MENU_CALLBACK,
+    'weight' => 0,
+  ];
+
+  return $items;
+}

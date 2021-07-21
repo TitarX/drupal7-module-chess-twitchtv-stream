@@ -1,0 +1,95 @@
+<?php
+
+/**
+ * Performs database updates and uninstallation cleanup for the Chess twitchtv
+ * stream module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function chess_twitchtv_stream_install() {
+  db_update('system')
+    ->fields(['weight' => 100])
+    ->condition('type', 'module')
+    ->condition('name', 'chess_twitchtv_stream')
+    ->execute();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function chess_twitchtv_stream_uninstall() {
+  cache_clear_all('chess_twitchtv_stream', 'cache', TRUE);
+  cache_clear_all('chess_twitchtv_stream_streams', 'cache', TRUE);
+  drupal_uninstall_schema('chess_twitchtv_stream');
+  drupal_uninstall_schema('chess_twitchtv_stream_streams');
+  menu_rebuild();
+}
+
+/**
+ * Implements hook_schema().
+ */
+function chess_twitchtv_stream_schema() {
+  $schema['chess_twitchtv_stream'] = [
+    'fields' => [
+      'id' => ['type' => 'serial', 'size' => 'normal', 'not null' => TRUE],
+      'client_id' => ['type' => 'varchar', 'length' => 255, 'not null' => TRUE],
+      'client_secret' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ],
+      'token' => ['type' => 'varchar', 'length' => 255],
+      'text' => ['type' => 'text'],
+      'ad_content_first' => ['type' => 'text'],
+      'ad_content_second' => ['type' => 'text'],
+      'ad_content_third' => ['type' => 'text'],
+      'ad_content_fourth' => ['type' => 'text'],
+    ],
+    'primary key' => ['id'],
+  ];
+
+  $schema['chess_twitchtv_stream_streams'] = [
+    'fields' => [
+      'id' => ['type' => 'serial', 'size' => 'normal', 'not null' => TRUE],
+      'weight' => [
+        'type' => 'int',
+        'size' => 'normal',
+        'not null' => TRUE,
+        'default' => 1000,
+      ],
+      'user_id' => ['type' => 'varchar', 'length' => 255],
+      'user_name' => ['type' => 'varchar', 'length' => 255, 'not null' => TRUE],
+      'stream_name' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ],
+      'addition_time' => [
+        'type' => 'int',
+        'size' => 'normal',
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'last_availability_time' => [
+        'type' => 'int',
+        'size' => 'normal',
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'status' => [
+        'type' => 'int',
+        'size' => 'tiny',
+        'not null' => TRUE,
+        'default' => 1,
+      ],
+    ],
+    'unique keys' => [
+      'user_streams' => ['user_id', 'user_name', 'stream_name'],
+    ],
+    'primary key' => ['id'],
+  ];
+
+  return $schema;
+}

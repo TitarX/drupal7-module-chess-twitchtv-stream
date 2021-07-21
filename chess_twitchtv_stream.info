@@ -1,0 +1,16 @@
+name = Chess twitchtv stream
+description = Chess twitchtv stream
+core = 7.x
+package = extra
+configure = admin/config/media/chess-twitchtv-stream
+
+files[] = chess_twitchtv_stream.install
+files[] = chess_twitchtv_stream.module
+files[] = includes/chess_twitchtv_stream_access_by_role.inc
+files[] = includes/chess_twitchtv_stream_admin_page_contents.inc
+files[] = includes/chess_twitchtv_stream_availability_stream_checking.inc
+files[] = includes/chess_twitchtv_stream_streams_page_contents.inc
+
+# stylesheets[all][] = css/chess_twitchtv_stream.css
+
+# scripts[] = js/chess_twitchtv_stream.js
